@@ -1,3 +1,4 @@
+// LANGKAH 1 :
 const namaUsaha = "Kopi Senja";
 const kotaUsaha = "Yogyakarta";
 const tahunBerdiri = 2020;      // FIX : menghapus petik dua pada "2020" menjadi 2020
@@ -32,6 +33,7 @@ console.log("Produk ke-3: " + produk[2]);       // FIX : mengubah string "... ke
     6   | Line 18           | Error                     | salah menulis kode perkalian      | mengganti (x) menjadi (*)            |
     7   | Line 23           | Salah, tapi tidak error   | salah menulis index yang dipanggil| mengganti index 3 menjadi 2          |
 */
+
 /*
   1. Mengapa `namausaha` dan `namaUsaha` dianggap dua hal berbeda oleh JavaScript?
     -   karena JavaScript menerapkan sensitive case, yaitu besar kecilnya huruf akan memengaruhi jalannya program, jika ada satu perbedaan kecil saja pada penulisan kode variable, maka variable tersebut tidak akan bisa diambil datanya. 
@@ -41,3 +43,10 @@ console.log("Produk ke-3: " + produk[2]);       // FIX : mengubah string "... ke
     -   karena value yang menggunakan petik dua termasuk ke dalam tipe data string, meskipun yang dimasukkan berupa angka maka angka tersebut dianggap sebagai teks, bukan sebagai tipe data number / integer.
     -   perbaikan yang saya pilih adalah menghapus kedua tanda petik sehingga menyisakan angka saja.
 */
+
+// LANGKAH 2 :
+
+let usaha = [namaUsaha,  namaPemilik,  kota, tahunBerdiri, statusBuka, nomorWhatsapp, website];
+// LANGKAH 3 :
+// LANGKAH 4 :
+// LANGKAH 5 :

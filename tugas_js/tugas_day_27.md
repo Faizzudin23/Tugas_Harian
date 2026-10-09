@@ -264,8 +264,8 @@ Nilai akhir tidak melebihi 100.
 
 ## Daftar Periksa Sebelum Dikumpulkan
 
-- [ ] Kode awal sudah di-commit sebelum diubah
-- [ ] Program berjalan tanpa error di console
+- [v] Kode awal sudah di-commit sebelum diubah
+- [v] Program berjalan tanpa error di console
 - [ ] Setiap langkah punya kode **dan** jawaban tertulis di komentar
 - [ ] Catatan Bug lengkap dan membedakan bug yang error dan yang tidak error
 - [ ] Tebakan Langkah 4 ditulis **sebelum** kode dijalankan
