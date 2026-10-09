@@ -33,9 +33,9 @@ console.log(10 > 5 && 3 > 8);
 /*
 PERTANYAAN 
 1. Untuk tebakan yang **meleset**, tulis kenapa hasilnya begitu. Jika semua benar, tulis tebakan yang menurutmu paling sulit dan alasannya.
-    - 
+    - langkah 10, karena banyak operator yang harus dibaca
 2. Kenapa `7 + 3 * 2` hasilnya `13`, bukan `20`?
-    - 
+    - karena operasi perkalian didahulukan baru operasi pertambahan
 3. Kenapa `5 == "5"` hasilnya `true`, tetapi `5 === "5"` hasilnya `false`?
-    - 
+    - Karena penggunaan "==" hanya membandingkan nilainya saja, sedangkan "===" membandingkan nilai dan tipe datanya, maka dari itu hasil perbandingannya adalah false.
 */ 
