@@ -212,9 +212,9 @@ Langkah 3 dinilai berdasarkan tabel syarat (kode, 29 poin), ditambah 6 poin untu
 
 ## Daftar Periksa Sebelum Dikumpulkan
 
-- [ ] Tebakan di Langkah 1 ditulis **sebelum** kode dijalankan
-- [ ] Ke-4 kesalahan di Langkah 2 sudah diperbaiki, dan hasilnya `51000 true 6 true`
+- [v] Tebakan di Langkah 1 ditulis **sebelum** kode dijalankan
+- [v] Ke-4 kesalahan di Langkah 2 sudah diperbaiki, dan hasilnya `51000 true 6 true`
 - [ ] Kasir di Langkah 3 memenuhi semua 9 syarat
-- [ ] Semua pertanyaan dijawab di komentar dengan bahasa sendiri
-- [ ] Tidak ada `var`, tidak ada error di console
+- [v] Semua pertanyaan dijawab di komentar dengan bahasa sendiri
+- [v] Tidak ada `var`, tidak ada error di console
 - [ ] Sudah di-*push* ke repository dan `README.md` terisi
