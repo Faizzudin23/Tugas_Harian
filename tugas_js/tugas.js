@@ -1,4 +1,4 @@
-// LANGKAH 1 :
+// === LANGKAH 1 : ===
 const namaUsaha = "Kopi Senja";
 const kotaUsaha = "Yogyakarta";
 const tahunBerdiri = 2020;      // FIX : menghapus petik dua pada "2020" menjadi 2020
@@ -44,9 +44,55 @@ console.log("Produk ke-3: " + produk[2]);       // FIX : mengubah string "... ke
     -   perbaikan yang saya pilih adalah menghapus kedua tanda petik sehingga menyisakan angka saja.
 */
 
-// LANGKAH 2 :
+// === LANGKAH 2 : ===
+const usaha = {
+    namaPerusahaan: "Fried Chicken",
+    namaPengusaha: "Akhmad Rudi Yanto",
+    kota: "Semarang",
+    tahunBuka: 2023,
+    statusPembukaan: true,
+    nomorTelepon: "081465935782",
+    webSite: null,
+};
 
-let usaha = [namaUsaha,  namaPemilik,  kota, tahunBerdiri, statusBuka, nomorWhatsapp, website];
-// LANGKAH 3 :
-// LANGKAH 4 :
-// LANGKAH 5 :
+let daftarMenu = [
+    {
+    kilat: 35000
+    },
+    {
+    cepat: 25000
+    },
+    {
+    normal: 20000
+    },
+    {
+    normal: 15000
+    },
+];
+console.log("Nama Perusahaan : " + usaha.namaPerusahaan);
+console.log("Asal Kota : " + usaha["kota"]);
+console.log("Jasa Pertama : " + daftarMenu[0].kilat);
+
+let dataUsahaArray = [namaUsaha, usaha.namaPengusaha, usaha.kota, tahunBerdiri, statusBuka, usaha.nomorTelepon, usaha.webSite];
+/* 
+PERTANYAAN :
+1. Mengapa nomor WhatsApp (contoh `"08123456789"`) lebih tepat disimpan sebagai **string**? Beri satu alasan konkret.
+    - Nomor telepon (seperti "08123456789") diawali dengan angka 0. Jika disimpan sebagai tipe data number (angka), JavaScript secara otomatis akan 
+      menghapus angka 0 di depan (leading zero) karena dalam matematika angka 0812... bernilai sama dengan 812.... Oleh karena itu, agar format nomor 
+      telepon tetap utuh dengan angka 0 di depannya, ia harus disimpan sebagai string.
+2. Mengapa `website` diberi `null`, bukan dibiarkan tanpa nilai seperti di kode awal? Apa bedanya `null` dan `undefined`?
+    - website diberi nilai null sebagai bentuk kesengajaan untuk menunjukkan bahwa properti tersebut saat ini memang kosong atau belum memiliki 
+      alamat website, tetapi disiapkan untuk diisi di masa mendatang.
+    - null: Menandakan "nilai kosong yang disengaja" (diset secara sadar oleh programmer).
+    - undefined: Menandakan bahwa suatu variabel atau properti belum pernah diberi nilai sama sekali oleh sistem atau belum didefinisikan.   
+3. Mengapa `daftarProduk[4]` tidak berisi produk ke-4, dan apa yang tercetak jika kamu mengaksesnya?
+    - Indeks ke-0 adalah produk pertama.
+    - Indeks ke-1 adalah produk kedua.
+    - Indeks ke-2 adalah produk ketiga.
+    - Indeks ke-3 adalah produk keempat.
+        Oleh karena itu, daftarProduk[4] sebenarnya merujuk pada produk kelima. Jika indeks tersebut tidak memiliki data di dalamnya, yang akan 
+        tercetak di konsol adalah undefined.
+*/
+// === LANGKAH 3 : ===
+// === LANGKAH 4 : ===
+// === LANGKAH 5 : ===
