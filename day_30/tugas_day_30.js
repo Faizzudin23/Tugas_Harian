@@ -136,3 +136,22 @@ if (uangBayar >= totalAkhir) {      // FIX : Mengganti Operator perbandingan dar
 }
 
 console.log(diskon, potonganMember, totalAkhir);
+
+/*
+PERTANYAAN : 
+1. Tulis ke-5 kesalahan tadi dalam satu kalimat singkat masing-masing (apa salahnya, dan perbaikannya apa).
+    - Mengubah urutan kondisi 100000 menjadi kondisi teratas
+    - Mengubah urutan kondisi 25000 menjadi kondisi ketiga
+    - Mengubah jenismember menjadi jenisMember (huruf M besar)
+    - Menambah kode 'break' setelah console.log milik case "gold"
+    - Mengganti operator penugasan '=' menjadi operator perbandingan longgar '=='
+    - Mengganti operator pembanding '>' menjadi '>=' agar angka 67000 bisa masuk
+2. Mana kesalahan yang menyebabkan error di console, dan mana yang tidak error tetapi hasilnya salah?
+    - Yang menyebabkan error adalah pada switch (jenismember),
+    - Untuk yang lainnya hasilnya berjalan normal namun tidak sesuai dengan yang diharapkan.
+3. Pada `if (kodeVoucher = "")`, apa bedanya `=`, `==`, dan `===`? Kenapa kodenya tidak error?
+    - Karena '=' artinya operator penugasan yang berfungsi memberi nilai.
+    - '==' adalah operator pembanding yang sifatnya longgar.
+    - '===' adalah operator pembanding yang sifatnya ketat. 
+    - Tidak terjadi error karena nilai dan tipe datanya sudah sama.
+*/
