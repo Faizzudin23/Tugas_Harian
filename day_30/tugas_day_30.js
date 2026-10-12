@@ -66,3 +66,24 @@ switch (hari) {
 // Hasil Tebakan    : Promo Akhir Pekan
 // Hasil Asli       : Promo Akhir Pekan
 //                    Promo Keluarga 
+
+/*
+PERTANYAAN :
+1. Pada Potongan A, kenapa `"0"` dan `[]` tetap masuk ke dalam `if`, padahal terlihat seperti kosong?
+    - Karena "0" bukanlah string kosong melainkan punya nilai 0 dalam bentuk teks, dan [] juga termasuk dalam tipe thruthy sehingga,
+      dua tipe nilai expression diatas termasuk ke dalam nilai true.
+2. Pada Potongan B, `belanja` bernilai 120000 tetapi hasilnya bukan "Diskon 15%". Kenapa? Bagaimana cara memperbaikinya?
+    - Karena kondisi pertama yaitu : 
+        if (belanja >= 25000) {
+            console.log("Diskon 5%");
+            } 
+      Dalam struktur logika nilai 120000 memang melebihi nilai 25000, maka dari itu perintah didalam kurung kurawal langsung dijalankan.
+    - Untuk memperbaikinya bisa dilakukan dengan cara memutar posisi urutan syaratnya, dimulai dari yang terbesar yaitu 100000 diletakkan
+      pada urutan pertama sebelum nilai lainnya.
+3. Pada Potongan C, kenapa yang tercetak dua baris? Apa yang harus ditambahkan agar hanya satu baris yang tercetak?
+    - Karena peletakan break berada dibawah case "sabtu" sehingga perintah console.log dilakukan sampai perintah menemukan baris break, 
+      barulah perintah berhenti berjalan.
+    - Agar hanya satu baris yang bisa tercetak, maka bisa menambahkan break setiap kali setelah console.log pada indentasi case sehingga,
+      setiap kali perintah menemukan "jalan" untuk bisa menampilkan output ke terminal, perintah akan langsung berhenti.
+*/
+
