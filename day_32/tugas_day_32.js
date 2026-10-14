@@ -1,4 +1,4 @@
-### Potongan A
+// ### Potongan A
 let menu = ["Kopi", "Teh", "Roti", "Susu"];
 // (air), kopi, (teh), roti, susu, (jus)
 menu.push("Jus");
@@ -17,7 +17,7 @@ console.log(menu.indexOf("Nasi"));  // Tebakan : undefined (x)
 console.log(menu.includes("Kopi")); // Tebakan : false (v)
 console.log(menu[menu.length - 1]); // Tebakan : Susu (v)
 
-### Potongan B
+// ### Potongan B
 
 function tambah(a, b) {
   return a + b;
@@ -32,7 +32,7 @@ let y = cetakTambah(2, 3);
 console.log(x);             // Tebakan : 5 (v)
 console.log(y);             // Tebakan : 5 (x)
 
-### Potongan C
+// ### Potongan C
 
 const hitungDiskonPersen = (harga, persen = 10) => harga - (harga * persen) / 100;
 console.log(hitungDiskonPersen(50000, 20));         // Tebakan : 40000
@@ -65,4 +65,61 @@ PERTANYAAN
     - tidak muncul, karena perintah return ditutup dengan nilai "negatif" dan ;, maka dari itu, console.log tidak dijalankan.
 */
 
+// LANGKAH 2
+let daftarBelanja = ["Kopi", "Teh", "Roti"];
 
+// Tambah "Susu" di akhir daftar. Seharusnya: ["Kopi", "Teh", "Roti", "Susu"]
+daftarBelanja.push("Susu");
+// mengubah metode .unshift menjadi .push agar data muncul di akhir list.
+
+// Hapus "Teh" (indeks 1) dari daftar. Seharusnya: ["Kopi", "Roti", "Susu"]
+daftarBelanja.splice(1, 1);
+// mengubah metode .slice menjadi .splice agar data Teh bisa terhapus.
+
+// Cek apakah "Roti" ada di daftar. Seharusnya: true
+let adaRoti = daftarBelanja.includes("Roti");
+// mengubah metode .indexOf menjadi .includes agar nilai yang dihasilkan antara false atau true.
+
+// Elemen terakhir daftar. Seharusnya: "Susu"
+let terakhir = daftarBelanja[daftarBelanja.length - 1];
+// menambahkan '- 1' didalam daftarBelanja.length agar bisa menghasilkan angka yang akan dipakai sebagai index
+
+// Harga setelah diskon. Seharusnya hitungDiskon(100000, 20) = 80000
+function hitungDiskon(harga, persen) {
+  return harga - (harga * persen) / 100;
+}
+// menambah return untuk menyimpan hasil operasi perhitungan
+
+// Pajak 11%. Seharusnya hitungPajak(80000) = 8800
+const hitungPajak = (subtotal) => {
+  return subtotal * 0.11;
+};
+// menambah return untuk menyimpan hasil operasi perhitungan
+
+console.log(daftarBelanja, adaRoti, terakhir);
+console.log(hitungDiskon(100000, 20));
+console.log(hitungPajak(80000));
+
+// Total dengan pajak. Seharusnya hitungTotal(80000, 8800) = 88800
+const hitungTotal = (subtotal, pajak) => subtotal + pajak;
+console.log(hitungTotal(80000, 8800));
+// menonaktifkan baris diatas agar tidak dieksekusi.
+
+
+/*
+PERTANYAAN : 
+1. Tulis ke-7 kesalahan tadi dalam satu kalimat singkat masing-masing (apa salahnya, dan perbaikannya apa).
+    - mengubah metode array agar sesuai dengan hasil yang diinginkan, menambah perintah return untuk memproses dan menyimpan hasilnya.
+    - .unshift -> .push
+    - .slice -> .splice
+    - .indexOf -> .includes
+    - menambah operasi '- 1'
+    - menambah return
+2. Mana kesalahan yang menyebabkan error di console, dan mana yang tidak error tetapi hasilnya salah?
+    - console.log(hitungTotal(80000, 8800));
+      const hitungTotal = (subtotal, pajak) => subtotal + pajak;
+    - karena tidak bisa hoisting makanya kodenya error
+
+3. Kenapa `hitungDiskon` dan `hitungPajak` sama-sama menghasilkan `undefined`, padahal cara menulisnya berbeda?
+    - Karena lupa menambah perintah return sehingga prosesnya tidak terjadi dan tersimpan.
+*/
