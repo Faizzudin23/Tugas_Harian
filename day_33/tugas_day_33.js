@@ -60,15 +60,13 @@ for (let kolom in kopi) {
 }
 
 for (let huruf of "Kopi") {
-1. Pada Potongan A, apa beda `produk.nama` dan `produk[kunci]`? Kenapa `produk.stok` hasilnya `undefined`?
-2. Pada Potongan B, kenapa `dompet.saldo` di akhir bernilai 20000, padahal `belanja(10000)` tidak disimpan ke variabel? Apa yang dirujuk oleh `this`?
-3. Pada Potongan C, kenapa `for...in` pada array menghasilkan `0` dan `1`, bukan `"Senin"` dan `"Selasa"`? Kenapa `for...of` pada object `kopi` menghasilkan error?
   console.log(huruf);           // Tebakan : K, o, p, i (v)
 }
-
+/*
 for (let x of kopi) {
     console.log(x);             // Tebakan : error : object is not iterable
 }
+*/
 
 /*
 PERTANYAAN : 
@@ -80,4 +78,74 @@ PERTANYAAN :
     - Yang dirujuk oleh this adalah dompet.cekSaldo sebelum dompet.belanja
 3. Pada Potongan C, kenapa `for...in` pada array menghasilkan `0` dan `1`, bukan `"Senin"` dan `"Selasa"`? Kenapa `for...of` pada object `kopi` menghasilkan error?
     - Karena fungsi for ... in adalah untuk menampilkan indeks dalam array, bukan nilai dari array.
+*/
+
+
+// LANGKAH 2 : PERBAIKI KESALAHAN
+const warung = {
+  nama: "Warung Senja",
+  saldoKas: 100000,
+
+  // Menambah kas. Seharusnya: setelah tambahKas(50000), saldoKas menjadi 150000
+  tambahKas(jumlah) {
+    warung.saldoKas += jumlah;          // Mengganti saldoKas dengan memakai metode dot notation untuk mengambil key dan value pada variabel warung.
+  },
+
+  // Mengambil kas. Seharusnya mengembalikan sisa saldoKas
+  ambilKas(jumlah) {
+    this.saldoKas -= jumlah;
+    return this.saldoKas;               // Menambah perintah return this.saldoKas agar value nya bisa ditangkap dan ditampilkan pada terminal.
+  },
+};
+
+warung.tambahKas(50000);
+console.log(warung.saldoKas);
+console.log(warung.ambilKas(30000));
+
+// Key dengan tanda hubung. Seharusnya tercetak: 08123
+const kontak = { "no-wa": "08123" };
+console.log(kontak["no-wa"]);           // Mengganti kontak.no-wa menjadi kontak["no-wa"] atau mengubah dari dot notation menjadi bracket notation.
+
+// Hapus kataSandi dari akun. Seharusnya tercetak: { nama: 'Rina' }
+const akun = { nama: "Rina", kataSandi: "abc123" };
+delete akun.kataSandi;                  // Mengganti akun.kataSandi = undefined, menjadi delete akun.kataSandi.
+console.log(akun);
+
+// Cetak semua isi array, satu per baris. Seharusnya: Kopi, Teh, Roti
+const menu = ["Kopi", "Teh", "Roti"];
+for (let item of menu) {                // Mengganti let item in menu menjadi let item of menu
+  console.log(item);
+}
+
+// Cetak semua properti object. Seharusnya: nama: Warung Senja dan kota: Yogyakarta
+const info = { nama: "Warung Senja", kota: "Yogyakarta" };
+for (let kolom in info) {               // Mengganti let kolom of info menjadi let kolom in info
+  console.log(kolom + ": " + info[kolom]);
+}
+
+// Daftar kunci object. Seharusnya: [ 'nama', 'kota' ]
+console.log(Object.keys(info));         // Memperbaiki typo 'key' menjadi 'keys'
+
+/*
+PERTANYAAN
+1. Tulis ke-7 kesalahan tadi dalam satu kalimat singkat masing-masing (apa salahnya, dan perbaikannya apa).
+    - menambah variabel warung sebelum mengambil properti saldoKas.
+    - menambah perintah return agar nilainya bisa ditangkap dan disimpan.
+    - mengubah dari dot notation menjadi bracket notation.
+    - mengganti akun.kataSandi menjadi delete akun.kataSandi
+    - mengganti 'in' menjadi 'of'
+    - mengganti 'of' menjadi 'in'
+    - memperbaiki typo 'key' menjadi 'keys'
+2. Mana kesalahan yang menyebabkan error di console, dan mana yang tidak error tetapi hasilnya salah?
+    - yang menyebabkan error adalah 
+        ````const kontak = { "no-wa": "08123" };
+            console.log(kontak.no-wa);````
+        karena menggunakan dot notation untuk mengambil object
+    - yang tidak error tapi hasilnya tidak sesuai
+    ````const menu = ["Kopi", "Teh", "Roti"];
+        for (let item in menu) {
+        console.log(item);
+        }````
+3. Kenapa `akun.kataSandi = undefined` tidak sama dengan `delete akun.kataSandi`? Tunjukkan bedanya memakai `in`.
+    - karena `akun.kataSandi = undefined` itu sama saja dengan mengganti value kataSandi, sedangkan `delete akun.kataSandi` artinya menghapus dari objek akun.
 */
