@@ -123,3 +123,125 @@ PERTANYAAN :
 3. Kenapa `hitungDiskon` dan `hitungPajak` sama-sama menghasilkan `undefined`, padahal cara menulisnya berbeda?
     - Karena lupa menambah perintah return sehingga prosesnya tidak terjadi dan tersimpan.
 */
+
+
+// LANGKAH 3 : BIKIN KASIR
+const kasirNamaMenu = ["Kopi Susu", "Es Teh", "Roti Bakar", "Nasi Goreng", "Jus Jeruk"];
+const kasirHargaMenu = [18000, 7500, 15000, 22000, 12000];
+let kasirKeranjang = [];
+
+// 1. PENGELOLAAN KERANJANG (Array Methods)
+kasirKeranjang.push("Kopi Susu");       // Menambah item di belakang
+kasirKeranjang.push("Roti Bakar");      // Menambah item di belakang
+kasirKeranjang.unshift("Nasi Goreng");  // Menambah item prioritas di depan
+kasirKeranjang.pop();                   // Membatalkan/menghapus satu item terakhir
+kasirKeranjang.push("Es Teh");          // Menambah item lagi
+kasirKeranjang.push("Jus Jeruk");       // Menambah item lagi (total akhir >= 4 item)
+kasirKeranjang.splice(1, 1, "Es Teh Manis"); // Mengganti satu item di indeks ke-1
+
+// 2. CEK MENGGUNAKAN INCLUDES & SLICE
+console.log("Apakah 'Roti Bakar' ada di keranjang?:", kasirKeranjang.includes("Roti Bakar"));
+
+const paketCepat = kasirKeranjang.slice(0, 3);
+console.log("Paket Cepat (3 item pertama):", paketCepat);
+console.log("");
+
+// 3. FUNCTION PERTAMA: Function Declaration
+function kasirCariHarga(namaMenu) {
+    let index = kasirNamaMenu.indexOf(namaMenu);
+    if (index !== -1) {
+        return kasirHargaMenu[index];
+    }
+    return 0;
+}
+
+// 4. FUNCTION KEDUA: Function Expression
+const kasirHitungSubtotal = function() {
+    let subtotal = 0;
+    for (let item of kasirKeranjang) {
+        subtotal += kasirCariHarga(item);
+    }
+    return subtotal;
+};
+
+// 5. FUNCTION KETIGA: Arrow Function (Diskon)
+const kasirHitungDiskon = (subtotal) => {
+    if (subtotal >= 100000) {
+        return subtotal * 0.15;
+    } else if (subtotal >= 50000) {
+        return subtotal * 0.10;
+    } else if (subtotal >= 25000) {
+        return subtotal * 0.05;
+    } else {
+        return 0;
+    }
+};
+
+// 6. FUNCTION KEEMPAT: Arrow Function Ringkas (Pajak)
+const kasirHitungPajak = (nilai, tarif = 0.11) => nilai * tarif;
+
+// 7. FUNCTION KELIMA: Cetak Struk
+const kasirCetakStruk = function(subtotal, diskon, pajak) {
+    console.log(`========================================`);
+    console.log(`           STRUK KASIR KEDAI            `);
+    console.log(`========================================`);
+    console.log(`Daftar Item Keranjang:`);
+    let no = 1;
+    for (let item of kasirKeranjang) {
+        let hargaSatuan = kasirCariHarga(item);
+        console.log(`${no}. ${item} - Rp ${hargaSatuan}`);
+        no++;
+    }
+    console.log(`----------------------------------------`);
+    console.log(`Subtotal       : Rp ${subtotal}`);
+    console.log(`Diskon         : Rp ${diskon}`);
+    
+    let setelahDiskon = subtotal - diskon;
+    console.log(`Pajak (11%)    : Rp ${pajak.toFixed(2)}`);
+    
+    // 8. Total akhir = subtotal - diskon + pajak (pajak dihitung dari setelah diskon)
+    let totalAkhir = setelahDiskon + pajak;
+    console.log(`----------------------------------------`);
+    console.log(`Total Akhir    : Rp ${totalAkhir.toFixed(2)}`);
+    console.log(`========================================`);
+};
+
+// 9. UJI 2 SKENARIO TRANSAKSI
+
+console.log(`--- SIMULASI SKENARIO 1 ---`);
+let subtotal1 = kasirHitungSubtotal();
+let diskon1 = kasirHitungDiskon(subtotal1);
+let pajak1 = kasirHitungPajak(subtotal1 - diskon1);
+kasirCetakStruk(subtotal1, diskon1, pajak1);
+
+console.log(`\n--- SIMULASI SKENARIO 2 (Ubah Keranjang) ---`);
+// Mengubah isi keranjang untuk skenario kedua (belanja lebih banyak agar dapat diskon besar)
+kasirKeranjang = ["Nasi Goreng", "Nasi Goreng", "Roti Bakar", "Kopi Susu"];
+let subtotal2 = kasirHitungSubtotal();
+let diskon2 = kasirHitungDiskon(subtotal2);
+let pajak2 = kasirHitungPajak(subtotal2 - diskon2);
+kasirCetakStruk(subtotal2, diskon2, pajak2);
+
+
+/*
+PERTANYAAN
+1. Pilih satu array method yang kamu pakai di keranjang. Apakah method itu mengubah array aslinya? Buktikan dengan `console.log` sebelum dan sesudah.
+    - Contoh method: push(). Method ini mengubah array aslinya dengan menambahkan elemen baru di bagian akhir.
+2. Apa beda `splice` dan `slice`? Beri contoh dari kodemu sendiri.
+    - splice: Mengubah array aslinya (mutating). Digunakan untuk menambah, menghapus, atau mengganti elemen di dalam array. Contoh dari kode kita: kasirKeranjang.splice(1, 1, "Es Teh Manis"); (mengganti item di indeks 1).
+    - slice: Tidak mengubah array asli (non-mutating). Digunakan untuk menyalin/memotong sebagian elemen dari array ke dalam array baru. Contoh dari kode kita: const paketCepat = kasirKeranjang.slice(0, 3); 
+      (mengambil 3 item pertama tanpa merusak array kasirKeranjang asli).
+3. Kenapa `kasirCariHarga` memakai `return`, bukan `console.log`? Apa yang akan terjadi pada `kasirHitungSubtotal` jika diganti `console.log`?
+    - kasirCariHarga wajib memakai return agar nilai harganya bisa dikirim keluar fungsi dan diterima oleh kasirHitungSubtotal untuk dijumlahkan.
+    - Jika di dalam kasirHitungSubtotal pemanggilan fungsi harganya diganti dengan console.log, fungsi tersebut tidak mengembalikan nilai apa pun (undefined). Akibatnya, proses penjumlahan subtotal akan gagal dan 
+      menghasilkan nilai NaN (Not a Number).
+4. Tunjuk satu **parameter** dan satu **argumen** dari kodemu, lalu jelaskan bedanya.
+    - Parameter: Variabel penampung yang ditulis di dalam tanda kurung saat fungsi didefinisikan. Contoh: namaMenu dalam penulisan function kasirCariHarga(namaMenu) { ... }.
+    - Argumen: Nilai nyata atau data aktual yang dikirimkan ke dalam fungsi saat fungsi tersebut dipanggil. Contoh: "Roti Bakar" saat kita memanggil kasirCariHarga("Roti Bakar").
+5. Kenapa `kasirHitungPajak` boleh dipanggil dengan satu argumen maupun dua argumen?
+    - Karena pada saat deklarasi fungsi, parameter keduanya sudah diset dengan nilai default (tarif = 0.11). Jika saat dipanggil kita hanya memasukkan satu argumen (misal: kasirHitungPajak(50000)), JavaScript otomatis memakai 
+      nilai default 0.11. Namun, jika kita memasukkan dua argumen (misal: kasirHitungPajak(50000, 0.12)), nilai default tersebut akan ditimpa oleh argumen kedua yang kita berikan.
+6. Apa yang terjadi jika kamu memanggil `kasirHitungSubtotal` sebelum baris pendefinisiannya? Kenapa berbeda dengan memanggil `kasirCariHarga` sebelum pendefinisiannya? Buktikan dengan kode, lalu jadikan baris percobaan itu komentar dan tulis hasilnya (termasuk pesan error jika ada).
+    - kasirCariHarga dibuat menggunakan Function Declaration, sehingga mengalami mekanisme hoisting (diangkat ke atas oleh JavaScript) dan bisa dipanggil bahkan sebelum baris kodenya ditulis.
+    - Sebaliknya, kasirHitungSubtotal dibuat menggunakan Function Expression dengan variabel const, sehingga tidak bisa diakses sebelum baris deklarasinya tercapai.
+*/
