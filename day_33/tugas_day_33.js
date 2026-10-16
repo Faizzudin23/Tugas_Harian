@@ -296,3 +296,29 @@ kasirKedai.tambahKeKeranjang("Es Teh Manis", 5);
 kasirKedai.cetakStruk();
 
 console.log("Saldo Kas Akhir di Kedai: Rp " + kasirKedai.saldoKas.toFixed(2));
+
+/*
+PERTANYAAN 
+1. Apa beda dot notation dan bracket notation? Beri contoh dari kodemu, dan jelaskan kapan bracket notation wajib dipakai.
+    - Dot notation (.): Digunakan untuk mengakses properti objek secara langsung dengan menuliskan nama propertinya setelah tanda titik (contoh dari kode: kasirKedai.nama).
+    - Bracket notation ([...]): Digunakan dengan memasukkan nama properti sebagai string di dalam tanda kurung siku (contoh dari kode: kasirKedai["kota"] atau pada properti dinamis kasirKedai[propWebsite]).
+    - Kapan bracket notation wajib dipakai: Bracket notation wajib dipakai ketika nama properti mengandung spasi, karakter khusus, diawali dengan angka, atau ketika nama propertinya tersimpan di dalam sebuah variabel (seperti variabel propWebsite).
+2. Kenapa di dalam method kamu menulis `this.saldoKas`, bukan `saldoKas`? Apa yang terjadi jika kata `this` dihapus? Buktikan dengan kode, lalu jadikan baris percobaan itu komentar dan tulis pesan errornya.
+    - Kata kunci this merujuk langsung ke objek tempat method itu berada (kasirKedai). Jika this dihapus dan kita hanya menulis saldoKas, JavaScript akan mencari variabel lokal bernama saldoKas di dalam ruang lingkup (scope) method tersebut, 
+      bukan di dalam properti objek, sehingga program akan gagal mengenalinya atau bernilai undefined.
+3. Apa beda `for...of` dan `for...in`? Tunjuk satu tempat di kodemu yang memakai masing-masing, dan jelaskan kenapa yang satu tidak bisa ditukar dengan yang lain.
+    - for...of: Digunakan untuk mengulang atau menelusuri nilai (values) dari objek yang dapat diiterasi (iterable) seperti Array atau String. Contoh penggunaannya di kode: saat melooping for (let item of this.menu).
+    - for...in: Digunakan untuk menelusuri kunci atau nama properti (keys) dari sebuah objek. Contoh penggunaannya di kode: saat melooping for (let kunci in kasirKedai.jamOperasional).
+    - Kenapa tidak bisa ditukar, for...of tidak bisa dipakai langsung pada objek biasa karena objek tidak iterable secara default, sedangkan for...in akan mengembalikan kunci propertinya saja, sehingga tidak cocok jika dipakai untuk mengambil isi item array secara langsung.
+4. Kenapa `for...of` pada `kasirKedai` (object) menghasilkan error, sedangkan pada string dan array tidak? Tulis pesan errornya.
+    - Array dan String secara bawaan memiliki protokol iterable yang didukung oleh JavaScript, sehingga for...of bisa membaca elemen atau karakternya satu persatu. Sebaliknya, objek biasa (kasirKedai) tidak memiliki iterator bawaan tersebut.
+    - Pesan errornya: TypeError: kasirKedai is not iterable
+5. Apa beda `Object.keys` dan `Object.values`? Tunjuk hasilnya dari kodemu.
+    - Object.keys(): Berfungsi untuk mengambil semua nama kunci (keys) dari sebuah objek dan mengembalikannya dalam bentuk array.
+    - Object.values(): Berfungsi untuk mengambil semua nilai (values) dari sebuah objek dan mengembalikannya dalam bentuk array.
+6. Kenapa `cariHarga` dan `hitungSubtotal` harus memakai `return`, sedangkan `cetakStruk` boleh tidak? Apa yang terjadi jika `hitungSubtotal` hanya memakai `console.log`?
+    - cariHarga dan hitungSubtotal adalah fungsi kalkulasi yang nilainya harus dikembalikan agar bisa diolah atau dipakai lagi oleh fungsi lain (seperti dimasukkan ke dalam perhitungan diskon dan total akhir). Sementara itu, cetakStruk tujuannya hanya untuk mencetak tampilan 
+      teks ke konsol, sehingga tidak wajib mengembalikan nilai (return).
+    - Jika hitungSubtotal hanya memakai console.log: Nilai subtotal tidak akan pernah tersimpan atau dikembalikan ke pemanggil fungsinya. Akibatnya, saat variabel penampung mencoba membaca hasil dari hitungSubtotal(), nilainya akan terbaca sebagai undefined, dan perhitungan 
+      diskon serta total akhir di kasir akan menjadi NaN (Not a Number).
+*/
