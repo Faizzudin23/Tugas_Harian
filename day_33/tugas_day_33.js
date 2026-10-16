@@ -149,3 +149,150 @@ PERTANYAAN
 3. Kenapa `akun.kataSandi = undefined` tidak sama dengan `delete akun.kataSandi`? Tunjukkan bedanya memakai `in`.
     - karena `akun.kataSandi = undefined` itu sama saja dengan mengganti value kataSandi, sedangkan `delete akun.kataSandi` artinya menghapus dari objek akun.
 */
+
+
+// LANGKAH 3 : BIKIN KASIR
+const kasirKedai = {
+    nama: "Kedai Senja",
+    kota: "Yogyakarta",
+    saldoKas: 0,
+    jamOperasional: { 
+        buka: "08:00", 
+        tutup: "21:00" 
+    },
+    menu: [
+        { nama: "Kopi Susu", kategori: "minuman", harga: 18000, stok: 10 },
+        { nama: "Es Teh Manis", kategori: "minuman", harga: 7000, stok: 15 },
+        { nama: "Roti Bakar", kategori: "makanan", harga: 15000, stok: 8 },
+        { nama: "Nasi Goreng", kategori: "makanan", harga: 25000, stok: 5 },
+        { nama: "Pisang Goreng", kategori: "makanan", harga: 10000, stok: 12 }
+    ],
+    keranjang: [],
+
+    // 2. Method cariHarga
+    cariHarga(namaMenu) {
+        for (let item of this.menu) {
+            if (item.nama.toLowerCase() === namaMenu.toLowerCase()) {
+                return item.harga;
+            }
+        }
+        return 0;
+    },
+
+    // 3. Method tambahKeKeranjang
+    tambahKeKeranjang(namaMenu, jumlah) {
+        for (let item of this.menu) {
+            if (item.nama.toLowerCase() === namaMenu.toLowerCase()) {
+                if (item.stok >= jumlah) {
+                    this.keranjang.push({ nama: item.nama, jumlah: jumlah });
+                    item.stok -= jumlah;
+                    return true;
+                }
+            }
+        }
+        return false;
+    },
+
+    // 4. Method hitungSubtotal
+    hitungSubtotal() {
+        let subtotal = 0;
+        for (let pesanan of this.keranjang) {
+            let hargaSatuan = this.cariHarga(pesanan.nama);
+            subtotal += hargaSatuan * pesanan.jumlah;
+        }
+        return subtotal;
+    },
+
+    // 5. Method hitungDiskon
+    hitungDiskon(subtotal) {
+        if (subtotal >= 100000) {
+            return subtotal * 0.15;
+        } else if (subtotal >= 50000) {
+            return subtotal * 0.10;
+        } else if (subtotal >= 25000) {
+            return subtotal * 0.05;
+        } else {
+            return 0;
+        }
+    },
+
+    // 6. Method cetakStruk
+    cetakStruk() {
+        console.log(`           STRUK ${this.nama.toUpperCase()}         `);
+        console.log(`========================================`);
+        
+        let subtotal = this.hitungSubtotal();
+        let diskon = this.hitungDiskon(subtotal);
+        let setelahDiskon = subtotal - diskon;
+        let pajak = setelahDiskon * 0.11;
+        let totalAkhir = setelahDiskon + pajak;
+
+        console.log(`Daftar Pesanan:`);
+        let no = 1;
+        for (let pesanan of this.keranjang) {
+            let harga = this.cariHarga(pesanan.nama);
+            console.log(`${no}. ${pesanan.nama} (${pesanan.jumlah}x) - Rp ${harga * pesanan.jumlah}`);
+            no++;
+        }
+
+        console.log(`----------------------------------------`);
+        console.log(`Subtotal     : Rp ${subtotal}`);
+        console.log(`Diskon       : Rp ${diskon}`);
+        console.log(`Pajak (11%)  : Rp ${pajak.toFixed(2)}`);
+        console.log(`Total Akhir  : Rp ${totalAkhir.toFixed(2)}`);
+        console.log(`========================================`);
+
+        // Menambahkan total ke saldoKas
+        this.saldoKas += totalAkhir;
+    }
+};
+
+// 7. Properti Dinamis
+let propWebsite = "website";
+kasirKedai[propWebsite] = "www.kedaisenja.com";
+console.log(`Cek properti pakai 'in' (sebelum hapus):`, propWebsite in kasirKedai);
+delete kasirKedai[propWebsite];
+console.log(`Cek properti pakai 'in' (sesudah hapus):`, propWebsite in kasirKedai);
+
+// 8. Perulangan for...in pada jamOperasional dan menu pertama
+console.log(`\n--- Jam Operasional (for...in) ---`);
+for (let kunci in kasirKedai.jamOperasional) {
+    console.log(`${kunci}: ${kasirKedai.jamOperasional[kunci]}`);
+}
+
+console.log(`\n--- Menu Pertama (for...in) ---`);
+for (let kunci in kasirKedai.menu[0]) {
+    console.log(`${kunci}: ${kasirKedai.menu[0][kunci]}`);
+}
+
+// 9. Object.keys dan Object.values
+console.log(`\nKeys Jam Operasional   :`, Object.keys(kasirKedai.jamOperasional));
+console.log(`Values Jam Operasional :`, Object.values(kasirKedai.jamOperasional));
+
+// 10. Menghitung huruf "a" kecil pada nama kedai dengan for...of pada string
+let jumlahHurufA = 0;
+for (let huruf of kasirKedai.nama) {
+    if (huruf === "a") {
+        jumlahHurufA++;
+    }
+}
+console.log(`\nJumlah huruf "a" kecil pada "${kasirKedai.nama}": ${jumlahHurufA}`);
+
+
+console.log(`----------------------------------------`);
+console.log(`           SIMULASI SKENARIO 1          `);
+console.log(`----------------------------------------`);
+kasirKedai.keranjang = []; 
+kasirKedai.tambahKeKeranjang("Kopi Susu", 2);
+kasirKedai.tambahKeKeranjang("Roti Bakar", 1);
+kasirKedai.cetakStruk();
+
+console.log(`----------------------------------------`);
+console.log(`           SIMULASI SKENARIO 2          `);
+console.log(`----------------------------------------`);
+kasirKedai.keranjang = []; 
+kasirKedai.tambahKeKeranjang("Nasi Goreng", 4);
+kasirKedai.tambahKeKeranjang("Es Teh Manis", 5);
+kasirKedai.cetakStruk();
+
+console.log("Saldo Kas Akhir di Kedai: Rp " + kasirKedai.saldoKas.toFixed(2));
