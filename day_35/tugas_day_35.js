@@ -201,3 +201,126 @@ PERTANYAAN :
     - Jika menggunakan this.saldo, JavaScript akan mencari properti bernama saldo di dalam objek yang dikembalikan ({ belanja, cekSaldo }). Karena variabel 
       saldo sebenarnya adalah variabel lokal (closure) di dalam fungsi buatDompet, bukan properti objek, maka this.saldo akan menghasilkan undefined.
 */
+
+
+// LANGKAH 3 : BIKIN KASIR
+// 1. GLOBAL SCOPE
+const NAMA_WARUNG = "Kedai Senja Bahagia";
+const TARIF_PAJAK = 0.11;
+
+
+cetakJudul();
+
+// 2. FUNCTION CETAK JUDUL
+function cetakJudul() {
+    // Menggunakan NAMA_WARUNG dari global scope tanpa parameter
+    console.log("=== " + NAMA_WARUNG.toUpperCase() + " ===");
+}
+
+
+// 3 & 4. FUNCTION PABRIK KASIR (Closure & Data Privat)
+function buatKasir(namaKasir, modalAwal) {
+    // Data privat menggunakan let (tidak bisa diakses atau diubah langsung dari luar)
+    let saldoKas = modalAwal;
+    let jumlahTransaksi = 0;
+    let riwayat = [];
+
+    return {
+        // 5. Catat penjualan
+        catatPenjualan(namaMenu, harga, jumlah) {
+            let subtotal = harga * jumlah;
+            let pajak = subtotal * TARIF_PAJAK;
+            let total = subtotal + pajak;
+
+            saldoKas += total;
+            jumlahTransaksi++;
+            riwayat.push({ namaMenu, jumlah, total });
+
+            return total;
+        },
+
+        // 6. Ambil kas
+        ambilKas(jumlah) {
+            if (jumlah > saldoKas) {
+                return false; // Gagal jika melebihi saldo
+            }
+            saldoKas -= jumlah;
+            return true; // Berhasil
+        },
+
+        // 7. Cek saldo dan lihat riwayat (dengan salinan)
+        cekSaldo() {
+            return saldoKas;
+        },
+        lihatRiwayat() {
+            return riwayat.slice(); // Mengembalikan salinan array agar yang asli aman
+        },
+
+        // 8. Ringkasan menggunakan template literal
+        ringkasan() {
+            console.log(`Kasir: ${namaKasir} | Total Transaksi: ${jumlahTransaksi} | Saldo Kas: Rp ${saldoKas}`);
+        }
+    };
+}
+
+
+// 9. SIMULASI DUA KASIR & TRANSAKSI
+let kasirPagi = buatKasir("Rina", 100000);
+let kasirMalam = buatKasir("Dodi", 50000);
+
+// Catat minimal 3 penjualan di kasir pagi
+kasirPagi.catatPenjualan("Kopi Susu", 20000, 2);
+kasirPagi.catatPenjualan("Roti Bakar", 15000, 1);
+kasirPagi.catatPenjualan("Teh Manis", 7500, 2);
+
+// Catat minimal 2 penjualan di kasir malam
+kasirMalam.catatPenjualan("Nasi Goreng", 25000, 2);
+kasirMalam.catatPenjualan("Es Jeruk", 10000, 3);
+
+// Panggil ambilKas minimal 2 kali (1 berhasil, 1 gagal)
+console.log("Ambil kas Rp 30.000 (Berhasil):", kasirPagi.ambilKas(30000));
+console.log("Ambil kas Rp 9.999.000 (Gagal):", kasirPagi.ambilKas(999999000));
+
+// Cetak ringkasan kedua kasir
+console.log("\n--- RINGKASAN AKHIR ---");
+kasirPagi.ringkasan();
+kasirMalam.ringkasan();
+
+
+// 10. BUKTIKAN DATA PRIVAT
+console.log("\n--- UJI COBA DATA PRIVAT ---");
+console.log("Akses langsung kasirPagi.saldoKas:", kasirPagi.saldoKas); // Output: undefined
+kasirPagi.saldoKas = 999999; // Mencoba menyisipkan properti baru dari luar
+console.log("Saldo setelah dipaksa ubah dari luar (cekSaldo):", kasirPagi.cekSaldo());
+
+// 11. BUKTIKAN SALINAN (SLICE)
+console.log("\n--- UJI COBA SALINAN RIWAYAT ---");
+let salinanRiwayat = kasirPagi.lihatRiwayat();
+salinanRiwayat.push({ namaMenu: "Menu Palsu", jumlah: 99, total: 99999 }); // Tambah data ke salinan
+
+console.log("Panjang riwayat ASLI setelah salinannya di-push:", kasirPagi.lihatRiwayat().length);
+
+// 12. PABRIK DISKON (ARROW FUNCTION)
+console.log("\n--- UJI COBA PABRIK DISKON ---");
+function buatPenghitungDiskon(persen) {
+    return (harga) => harga - (harga * persen / 100);
+}
+
+let diskon10 = buatPenghitungDiskon(10);
+let diskon25 = buatPenghitungDiskon(25);
+
+console.log("Harga 80000 dengan diskon 10%:", diskon10(80000)); // Output: 72000
+console.log("Harga 80000 dengan diskon 25%:", diskon25(80000)); // Output: 60000
+
+
+// 13. SHADOWING VARIABEL
+console.log("\n--- UJI COBA VARIABLE SHADOWING ---");
+let statusToko = "Buka"; // Variabel global
+
+function cekStatusToko() {
+    let statusToko = "Tutup Sementara"; // Variabel lokal dengan nama yang sama (Shadowing)
+    console.log("Nilai di DALAM function:", statusToko);
+}
+
+cekStatusToko();
+console.log("Nilai di LUAR function (Global):", statusToko);
