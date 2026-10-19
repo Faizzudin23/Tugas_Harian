@@ -324,3 +324,26 @@ function cekStatusToko() {
 
 cekStatusToko();
 console.log("Nilai di LUAR function (Global):", statusToko);
+
+/*
+PERTANYAAN 
+1. Kenapa `kasirPagi.saldoKas` menghasilkan `undefined`, padahal method kasir bisa mengubah `saldoKas`? Apa hubungannya dengan closure?
+    - Karena saldoKas adalah variabel lokal di dalam scope fungsi, bukan properti objek publik. Hubungannya dengan closure: closure membuat 
+      variabel tersebut aman di dalam fungsi tertutup, bisa diakses/diubah oleh method-nya, tapi disembunyikan dari luar.
+2. Kenapa saldo `kasirPagi` dan `kasirMalam` terpisah, padahal dibuat dari function yang sama?
+    - Karena setiap kali fungsi buatKasir dipanggil, JavaScript membuat ruang memori (lingkungan leksikal) baru yang terpisah 
+      total untuk masing-masing variabel lokalnya.
+3. Setelah `buatKasir` selesai dijalankan, variabel mana saja yang masih "diingat"? Kenapa tidak hilang?
+    - Variabel saldoKas, jumlahTransaksi, dan riwayat. Variabel tersebut tidak hilang karena diikat oleh closure, sehingga 
+      JavaScript tetap mempertahankan memorinya selama objek kasir masih digunakan.
+4. Kenapa `TARIF_PAJAK` bisa dipakai di dalam method meskipun dideklarasikan di luar `buatKasir`? Apa nama mekanismenya?
+    - Karena mekanisme Scope Chain (rantai cakupan), di mana JavaScript akan mencari variabel keluar hingga tingkat global 
+      jika tidak menemukannya di dalam fungsi lokal.
+5. Kenapa `cetakJudul()` bisa dipanggil sebelum didefinisikan? Tambahkan satu percobaan: ubah menjadi function expression dengan `const`, panggil sebelum didefinisikan, lalu catat hasilnya di komentar dan jadikan baris itu komentar.
+    - Karena Hoisting (pengangkatan function declaration ke atas sebelum kode dieksekusi).
+      Percobaan:
+      // cetakJudulExpr(); // Error: ReferenceError: Cannot access 'cetakJudulExpr' before initialization
+         const cetakJudulExpr = function() { console.log("Test"); };
+6. Pada `buatPenghitungDiskon`, nilai `persen` tidak dikirim lagi saat `diskon10(80000)` dipanggil. Dari mana function itu mengetahui nilai `persen`?
+    - Dari closure, di mana arrow function menyimpan dan "mengingat" nilai parameter persen dari fungsi pembungkusnya (buatPenghitungDiskon) saat pertama kali dibuat.
+*/
