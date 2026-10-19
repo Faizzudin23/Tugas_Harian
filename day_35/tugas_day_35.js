@@ -103,3 +103,101 @@ const salam = function () {
 };
 Karena saya kira ada function dan bisa di hoist dan ternyata tetap tidak bisa karena deklarasinya adalah const.
 */
+
+
+// LANGKAH 2 : PERBAIKAN
+// Cek stok. Seharusnya tercetak: Stok aman
+const stok = 10;
+if (stok > 5) {
+  let pesanStok = "Stok aman";
+    console.log(pesanStok);         // FIX : memindahkan posisi console.log ke dalam blok if
+}
+
+// Potongan 10%. Seharusnya tercetak: 45000
+function hitungPotongan(harga) {
+  const potongan = harga * 0.1;
+  return hargaAkhir = harga - potongan; // FIX : menambah variabel agar value bisa ditampung
+}
+hitungPotongan(50000);
+console.log(hargaAkhir);            // FIX : mengganti potongan menjadi variabel hargaAkhir
+
+// Sambutan. Seharusnya tercetak: Selamat datang di Kedai Senja
+console.log(sambutan());
+function sambutan() {               // FIX : menghapus 'const sambutan' dan menggantinya menjadi function sambutan() agar bisa di hoist
+  return "Selamat datang di Kedai Senja";
+};
+
+// Kota. Seharusnya tercetak: Yogyakarta
+let kota = "Yogyakarta";
+console.log(kota);              // FIX : memindahkan posisi console.log(kota) setelah variabel dideklarasikan.
+
+// Total awal 100000. Diskon 90000 hanya dipakai di dalam blok.
+// Seharusnya setelah blok, total tetap: 100000
+var total = 100000;
+if (true) {
+  let total = 90000;            // FIX : mengganti deklarasi var menjadi let
+}
+console.log(total);
+
+// Saldo kas. Seharusnya setelah tambahKas(50000): 150000
+let saldoKas = 100000;
+function tambahKas(jumlah) {
+  //let saldoKas = 10000;           // FIX : menghapus baris deklarasi 'let saldoKas' agar program mengambil value pada global scope
+
+  saldoKas += jumlah;
+}
+tambahKas(50000);
+console.log(saldoKas);
+
+// Nomor antrean. Seharusnya tercetak: 1 2 3
+function buatAntrean() {
+  let nomor = 0;            // FIX : memindahkan baris 'let nomor = 0;' ke dalam blok function buatAntrean().
+  return function () {
+    nomor++;
+    return nomor;
+  };
+}
+const ambilNomor = buatAntrean();
+console.log(ambilNomor(), ambilNomor(), ambilNomor());
+
+// Dompet. Seharusnya setelah belanja(30000), cekSaldo() mengembalikan: 70000
+function buatDompet(saldoAwal) {
+  let saldo = saldoAwal;
+  return {
+    belanja(jumlah) {
+      saldo -= jumlah;
+    },
+    cekSaldo() {
+      return saldo;             // FIX : meniadakan 'this.' karena memang tidak diperlukan.
+    },
+  };
+}
+const dompet = buatDompet(100000);
+dompet.belanja(30000);
+console.log(dompet.cekSaldo());
+
+/*
+PERTANYAAN :
+1. Tulis ke-8 kesalahan tadi dalam satu kalimat singkat masing-masing (apa salahnya, dan perbaikannya apa).
+    - memindahkan posisi console.log ke dalam blok if
+    - menambah variabel agar value bisa ditangkap
+    - mengganti potongan menjadi variabel hargaAkhir
+    - menghapus 'const sambutan' menjadi function sambutan() agar bisa di hoist
+    - memindahkan console.log kebawah setelah variabel kota dideklarasikan
+    - menghapus baris deklarasi 'let saldoKas' agar program mengambil value pada global scope
+    - memindahkan baris 'let nomor = 0;' ke dalam blok function buatAntrean()
+    - meniadakan 'this.' karena memang tidak diperlukan
+2. Mana kesalahan yang menyebabkan error di console, dan mana yang tidak error tetapi hasilnya salah?
+    // Cek stok. Seharusnya tercetak: Stok aman
+    const stok = 10;
+    if (stok > 5) {
+      let pesanStok = "Stok aman";
+    }
+    console.log(pesanStok);
+    karena variabel pesanStok belum dibuat.
+3. Kenapa `let saldoKas = 0;` di dalam `tambahKas` membuat `saldoKas` di luar tidak berubah? Apa istilah untuk kejadian ini?
+    - karena perintah function tambahKas mengambil variabel saldoKas didalamnya, sedangkan console.log(saldoKas) mengambil value dari global scope
+4. Kenapa `this.saldo` di dalam `cekSaldo` menghasilkan `undefined`, padahal `saldo` ada di `buatDompet`?
+    - Jika menggunakan this.saldo, JavaScript akan mencari properti bernama saldo di dalam objek yang dikembalikan ({ belanja, cekSaldo }). Karena variabel 
+      saldo sebenarnya adalah variabel lokal (closure) di dalam fungsi buatDompet, bukan properti objek, maka this.saldo akan menghasilkan undefined.
+*/
